@@ -9,12 +9,11 @@
 
 class ScalarConverter {
 private:
-    ScalarConverter(); // no instantiation
+    ScalarConverter();
 
 public:
     static void convert(const std::string &literal);
 
-    // Helpers
     static bool isChar(const std::string &s);
     static bool isInt(const std::string &s);
     static bool isFloat(const std::string &s);

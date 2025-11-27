@@ -11,7 +11,9 @@ bool ScalarConverter::isChar(const std::string &s) {
 
 /*
     Detect integer
-*/
+    c_str() and strtol to check if entire string is a valid integer
+    c_str() converts std::string to C-style string (null-terminated char array)
+    */
 bool ScalarConverter::isInt(const std::string &s) {
     char *end;
     strtol(s.c_str(), &end, 10);
@@ -20,6 +22,7 @@ bool ScalarConverter::isInt(const std::string &s) {
 
 /*
     Detect float literal with trailing 'f'
+    strtof to parse float
 */
 bool ScalarConverter::isFloat(const std::string &s) {
     if (s == "nanf" || s == "+inff" || s == "-inff")
@@ -31,6 +34,7 @@ bool ScalarConverter::isFloat(const std::string &s) {
 
 /*
     Detect double literal
+    strtod to parse double
 */
 bool ScalarConverter::isDouble(const std::string &s) {
     if (s == "nan" || s == "+inf" || s == "-inf")
@@ -42,6 +46,8 @@ bool ScalarConverter::isDouble(const std::string &s) {
 
 /*
     Conversion entry point
+    Determine type and convert accordingly
+    static_cast to convert between types
 */
 void ScalarConverter::convert(const std::string &s) {
     double val;
@@ -78,11 +84,14 @@ void ScalarConverter::printChar(double d) {
 void ScalarConverter::printInt(double d) {
     std::cout << "int: ";
     if (d < INT_MIN || d > INT_MAX)
-        std::cout << "impossible\n";
+    std::cout << "impossible\n";
     else
-        std::cout << static_cast<int>(d) << "\n";
+    std::cout << static_cast<int>(d) << "\n";
 }
 
+/*
+    setprecision controls decimal places
+*/
 void ScalarConverter::printFloat(double d) {
     std::cout << std::fixed << std::setprecision(1);
     std::cout << "float: " << static_cast<float>(d) << "f\n";
